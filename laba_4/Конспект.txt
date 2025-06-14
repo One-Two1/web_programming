@@ -6,3 +6,4 @@
 
 Все числа  вещественные
 Тетрис. Минимальный функционал: соблюдение правил игры и подсчет очков, подписка на события клавитуры.
+Референс https://proglib.io/p/tetris-na-javascript-razbiraem-vozmozhnosti-yazyka-cherez-geymifikaciyu-2020-11-23
