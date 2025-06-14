@@ -10,11 +10,11 @@ ctx.scale(BLOCK_SIZE, BLOCK_SIZE); //метод используется, что
 
 let board = new Board(); //создаем экземпляр класса
 
-function play() {  
-  board.reset();  
+//function play() {  
+ // board.reset();  
   // наглядное представление матрицы игрового поля
-  console.table(board.grid);  
-}
+  //console.table(board.grid);  
+//}
 
 function play() {
     board.reset();
@@ -33,6 +33,8 @@ const moves = {
 
 //const p = this.moves[event.key](this.piece);
 
+
+       
 document.addEventListener('keydown', event => {
   if (moves[event.keyCode]) {  
     // отмена действий по умолчанию
@@ -40,16 +42,25 @@ document.addEventListener('keydown', event => {
     
     // получение новых координат фигурки
     let p = moves[event.keyCode](board.piece);
-    
-    // проверка нового положения
-    if (board.valid(p)) {    
+
+    if (event.keyCode === KEY.SPACE) {
+      // Жесткое падение
+      while (board.valid(p)) {
+        board.piece.move(p);
+        // стирание старого отображения фигуры на холсте
+        ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+        board.piece.draw();
+        p = moves[KEY.DOWN](board.piece);
+      }
+    } 
+    else if (board.valid(p)) {    
       // реальное перемещение фигурки, если новое положение допустимо
       board.piece.move(p);
-      
+    
       // стирание старого отображения фигуры на холсте
       ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height); 
-      
       board.piece.draw();
     }
   }
 });
+     

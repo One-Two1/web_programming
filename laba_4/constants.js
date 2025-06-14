@@ -4,6 +4,7 @@ const COLS=10; //столбцы
 const BLOCK_SIZE=30; // размер единичного блока
 
 const KEY = {
+    SPACE: 32,
     LEFT: 37,
     RIGHT: 39,
     DOWN: 40,
