@@ -8,7 +8,7 @@ ctx.canvas.height = ROWS * BLOCK_SIZE;
 // устанавливаем масштаб
 ctx.scale(BLOCK_SIZE, BLOCK_SIZE); //метод используется, чтобы не умножать на переменные на размер блока
 
-let board = new Board(); //создаем экземпляр класса
+let board = new Board(ctx); //создаем экземпляр класса
 
 //function play() {  
  // board.reset();  
@@ -16,15 +16,42 @@ let board = new Board(); //создаем экземпляр класса
   //console.table(board.grid);  
 //}
 
+function animate(now = 0) {
+    // обновить истекшее время
+    time.elapsed = now - time.start;
+
+    // если время отображения текущего фрейма прошло 
+    if (time.elapsed > time.level) {
+
+        // начать отсчет сначала
+        time.start = now;
+
+        // "уронить" активную фигурку
+        board.drop();
+    }
+
+    // очистить холст для отрисовки нового фрейма
+    ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+
+    // отрисовать игровое поле 
+    board.draw();
+    requestAnimationFrame(animate);
+}
+
+
 function play() {
     board.reset();
     let piece = new Piece(ctx);
     piece.draw();
     
     board.piece = piece;
+
+    board.piece.setStartPosition();
+    animate();
   }
 
 const moves = {
+    [KEY.UP]: (p) => board.rotate(p),
     [KEY.LEFT]:  p => ({ ...p, x: p.x - 1 }),
     [KEY.RIGHT]: p => ({ ...p, x: p.x + 1 }),
     [KEY.DOWN]:    p => ({ ...p, y: p.y + 1 }),
