@@ -4,6 +4,9 @@ const ctx = canvas.getContext('2d');
 // устанавливаем размеры холста
 ctx.canvas.width = COLS * BLOCK_SIZE;
 ctx.canvas.height = ROWS * BLOCK_SIZE;
+//ctx.fillStyle = 'red';
+// Заполняем весь холст цветом
+//ctx.fillRect(0, 0, canvas.width, canvas.height);
 
 // устанавливаем масштаб
 ctx.scale(BLOCK_SIZE, BLOCK_SIZE); //метод используется, чтобы не умножать на переменные на размер блока
@@ -37,6 +40,7 @@ function animate(now = 0) {
     board.draw();
     requestAnimationFrame(animate);
 }
+
 
 
 function play() {
@@ -90,4 +94,39 @@ document.addEventListener('keydown', event => {
     }
   }
 });
-     
+
+let accountValues = {
+  score: 0,
+  lines: 0,
+  level: 0
+}
+//Теперь при каждом изменении свойств объекта account будет вызываться функция updateAccount. 
+// Обновление данных на экране
+function updateAccount(key, value) {
+  let element = document.getElementById(key);
+  if (element) {
+    element.textContent = value;
+  }
+}
+
+// Проксирование доступа к свойствам accountValues
+let account = new Proxy(accountValues, {
+  set: (target, key, value) => {
+    target[key] = value;
+    updateAccount(key, value);
+    return true;
+  }
+});
+
+if (event.keyCode === KEY.SPACE) {
+  while (board.valid(p)) {
+    account.score += POINTS.HARD_DROP;
+    board.piece.move(p);
+    p = moves[KEY.DOWN](board.piece);
+  }
+} else if (board.valid(p)) {
+  board.piece.move(p);
+  if (event.keyCode === KEY.DOWN) {
+    account.score += POINTS.SOFT_DROP;
+  }
+}

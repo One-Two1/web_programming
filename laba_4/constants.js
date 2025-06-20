@@ -1,4 +1,4 @@
-'use strict';
+'use strict'; // строгий режим выполнения
 const ROWS=20; //строки
 const COLS=10; //столбцы
 const BLOCK_SIZE=30; // размер единичного блока
@@ -35,6 +35,28 @@ const SHAPES = [
 ];
 
 const time = { start: 0, elapsed: 0, level: 1000 };
+
+const POINTS = {
+  SINGLE: 100,
+  DOUBLE: 300,
+  TRIPLE: 500,
+  TETRIS: 800,
+  SOFT_DROP: 1,
+  HARD_DROP: 2
+}
+Object.freeze(POINTS);
+
+const LINES_PER_LEVEL = 10;
+
+const LEVEL = {
+  0: 800,
+  1: 720,
+  2: 630,
+  3: 550,
+  // ...
+}
+
+Object.freeze(LEVEL);
         
 //const X = 'x';
 //const a = { [X]: 5 };

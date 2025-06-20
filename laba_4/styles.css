@@ -5,16 +5,11 @@
   .grid {
     display: grid;
     grid-template-columns: 320px 200px;
-  }
-  
-  .right-column {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-  }
+    /*background-color: red;*/}
 
   .game-board {
     border: solid 2px;
+    background-color:#fffff0;
   }
   
   .play-button {
@@ -22,4 +17,6 @@
     font-size: 16px;
     padding: 15px 30px;
     cursor: pointer;
+  }
+  .l_arr :after {content: \21D2; 
   }

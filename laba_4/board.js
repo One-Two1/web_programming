@@ -1,5 +1,6 @@
 class Board {
-    constructor() {
+    constructor(ctx) {
+      this.ctx = ctx
       this.piece = null;
     }
     
@@ -86,18 +87,54 @@ valid(p) {
         });
     }
 
-    drop() {
-        let p = moves[KEY.DOWN](this.piece);
-        if (this.valid(p)) {
-            this.piece.move(p);
-        } else {
-            this.freeze();
-            console.table(this.grid);
+   drop() {
+  let p = moves[KEY.DOWN](this.piece);
+  if (this.valid(p)) {
+    this.piece.move(p);
+  } else {
+    this.freeze();
+    this.clearLines();
+    console.table(this.grid);
 
-            this.piece = new Piece(this.ctx);
-            this.piece.setStartPosition();
-        }
+    this.piece = new Piece(this.ctx);
+    this.piece.setStartPosition();
+  }
+}
+
+getLineClearPoints(lines,  level) {  
+    return lines === 1 ? POINTS.SINGLE :
+         lines === 2 ? POINTS.DOUBLE :  
+         lines === 3 ? POINTS.TRIPLE :     
+         lines === 4 ? POINTS.TETRIS : 
+         0;
+}
+
+clearLines() {
+  let lines = 0;
+
+  this.grid.forEach((row, y) => {
+    // Если все клетки в ряду заполнены
+    if (row.every(value => value > 0)) {
+      lines++;
+
+      // Удалить этот ряд
+      this.grid.splice(y, 1);
+
+      // Добавить наверх поля новый пустой ряд клеток
+      this.grid.unshift(Array(COLS).fill(0));
     }
+  });
+
+  if (lines > 0) {    
+    // Добавить очки за собранные линии
+    account.score += this.getLineClearPoints(lines);  
+  }
+  
+  }
+
+
+
+    
 
  
 }
