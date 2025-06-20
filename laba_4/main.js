@@ -19,6 +19,17 @@ let board = new Board(ctx); //создаем экземпляр класса
   //console.table(board.grid);  
 //}
 
+let requestId;
+
+function gameOver() {
+  cancelAnimationFrame(requestId);
+  this.ctx.fillStyle = 'black';
+  this.ctx.fillRect(1, 3, 8, 1.2);
+  this.ctx.font = '1px Arial';
+  this.ctx.fillStyle = 'red';
+  this.ctx.fillText('GAME OVER', 1.8, 4);
+}
+
 function animate(now = 0) {
     // обновить истекшее время
     time.elapsed = now - time.start;
@@ -30,7 +41,11 @@ function animate(now = 0) {
         time.start = now;
 
         // "уронить" активную фигурку
-        board.drop();
+        
+         if (!board.drop()) {
+      gameOver();
+      return;
+    }
     }
 
     // очистить холст для отрисовки нового фрейма
@@ -38,7 +53,7 @@ function animate(now = 0) {
 
     // отрисовать игровое поле 
     board.draw();
-    requestAnimationFrame(animate);
+     requestId=requestAnimationFrame(animate);
 }
 
 
@@ -130,3 +145,4 @@ if (event.keyCode === KEY.SPACE) {
     account.score += POINTS.SOFT_DROP;
   }
 }
+

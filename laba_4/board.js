@@ -96,9 +96,16 @@ valid(p) {
     this.clearLines();
     console.table(this.grid);
 
+    if (this.piece.y === 0) {
+      // Game over
+      return false;
+    }
+
     this.piece = new Piece(this.ctx);
     this.piece.setStartPosition();
   }
+
+  return true;
 }
 
 getLineClearPoints(lines,  level) {  
