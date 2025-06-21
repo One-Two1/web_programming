@@ -11,12 +11,16 @@
     border: solid 2px;
     background-color:#fffff0;
   }
-  
-  .play-button {
+
+.play-button {
+    display: block;
+    position: absolute;
+    top: 560px;
+    left:320px;
     background-color: #4caf50;
     font-size: 16px;
     padding: 15px 30px;
     cursor: pointer;
-  }
+}
   .l_arr :after {content: \21D2; 
   }

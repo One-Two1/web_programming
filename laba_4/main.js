@@ -53,7 +53,7 @@ function animate(now = 0) {
 
     // отрисовать игровое поле 
     board.draw();
-     requestId=requestAnimationFrame(animate);
+    requestId = requestAnimationFrame(animate);
 }
 
 
